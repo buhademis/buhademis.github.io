@@ -28,553 +28,668 @@
             background-color: var(--bg-dark);
             color: #FFFFFF;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 8px;
+            padding: 10px 20px 15px 20px;
             min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .fullscreen-btn {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--button-dark);
+            color: var(--neon-blue);
+            border: 1px solid var(--border-neon);
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 100;
+            opacity: 0.85;
+            transition: opacity 0.2s;
+        }
+
+        .fullscreen-btn:hover {
+            opacity: 1;
+        }
+
+        .container {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 100%;
+            padding-top: 35px;
+        }
+
+        .team-panel {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .team-title {
+            font-size: 38px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        #lbl-e1 { color: var(--text-gold); }
+        #lbl-e2 { color: var(--neon-red); text-align: right; }
+
+        .btn-team {
+            background-color: #050B17;
+            color: #FFFFFF;
+            border: 2px solid;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s;
+            width: fit-content;
+        }
+
+        #btn-e1 { border-color: var(--text-gold); }
+        #btn-e2 { border-color: var(--neon-red); }
+
+        .btn-team.active {
+            background-color: var(--active-green) !important;
+            color: #000000 !important;
+        }
+
+        .round-score {
+            font-size: 46px;
+            font-weight: bold;
+            color: var(--neon-blue);
+            background-color: #02091A;
+            border: 2px solid var(--neon-blue);
+            padding: 0px 35px;
+            border-radius: 2px;
+            margin-bottom: 5px;
+        }
+
+        .main-board {
+            background-color: var(--panel-bg);
+            border: 2px solid var(--border-neon);
+            border-radius: 4px;
+            padding: 15px 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            overflow-x: hidden;
-        }
-
-        /* TOP BAR FIX PENTRU MOBIL */
-        .top-bar {
+            flex: 1;
             width: 100%;
-            max-width: 900px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 10px;
-            align-items: center;
         }
 
-        .fullscreen-container {
-            grid-column: 1 / -1;
-            display: flex;
-            justify-content: center;
-        }
-
-        .fullscreen-btn {
-            background: rgba(0, 240, 255, 0.05);
-            border: 1px solid var(--neon-blue);
-            color: var(--neon-blue);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .score-center {
-            grid-column: 1 / -1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 2px 0;
-        }
-
-        .total-score {
-            font-size: 26px;
+        .question-text {
+            font-size: 31px;
             font-weight: bold;
-            color: var(--neon-blue);
-            border: 2px solid var(--neon-blue);
-            padding: 2px 20px;
-            border-radius: 6px;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-            background: rgba(0, 240, 255, 0.1);
-        }
-
-        .team-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            background: rgba(3, 13, 34, 0.6);
-            padding: 6px;
-            border-radius: 6px;
-            border: 1px solid #102347;
-        }
-
-        .team-title {
-            font-size: 11px;
-            font-weight: bold;
-            color: var(--neon-red);
-            text-shadow: 0 0 4px var(--neon-red);
             text-align: center;
-            word-break: break-word;
-        }
-
-        .team-title.blue {
-            color: var(--text-gold);
-            text-shadow: 0 0 4px var(--text-gold);
-        }
-
-        .btn-team {
-            background: var(--button-dark);
-            border: 1px solid var(--text-gold);
-            color: #FFF;
-            padding: 5px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 10px;
-            transition: all 0.2s;
-            text-transform: uppercase;
-            width: 100%;
-            text-align: center;
-        }
-
-        .btn-team:hover, .btn-team.active {
-            background: var(--text-gold);
-            color: #000;
-            box-shadow: 0 0 8px var(--text-gold);
-        }
-
-        /* ADAPTARE DESKTOP */
-        @media (min-width: 650px) {
-            .top-bar {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-            }
-            .fullscreen-container {
-                width: 100%;
-                order: -1;
-                margin-bottom: 5px;
-            }
-            .score-center {
-                order: 2;
-                margin: 0;
-            }
-            .team-box {
-                order: 1;
-                flex: 1;
-                max-width: 250px;
-                border: none;
-                background: transparent;
-            }
-            .team-box:last-child {
-                order: 3;
-            }
-            .team-title {
-                font-size: 15px;
-            }
-            .btn-team {
-                font-size: 11px;
-                padding: 6px 12px;
-            }
-            .total-score {
-                font-size: 32px;
-            }
-        }
-
-        /* MAIN BOARD */
-        .board {
-            width: 100%;
-            max-width: 900px;
-            background-color: var(--panel-bg);
-            border: 2px solid var(--border-neon);
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            flex-grow: 1;
-        }
-
-        .round-title {
-            text-align: center;
-            font-size: 13px;
-            color: #AAA;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .question-box {
-            text-align: center;
-            font-size: 15px;
-            font-weight: bold;
-            color: #FFF;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 5px;
+            white-space: pre-line;
             line-height: 1.3;
         }
 
         .answers-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 8px;
-            margin-top: 5px;
-        }
-
-        @media (min-width: 500px) {
-            .answers-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .question-box {
-                font-size: 18px;
-            }
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 15px;
+            width: 100%;
+            flex: 1;
+            margin: 10px 0;
         }
 
         .answer-card {
-            height: 52px;
-            background: linear-gradient(180deg, #071630 0%, #030A18 100%);
-            border: 1px solid #1A3058;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
+            background-color: #061126;
+            border: 1px solid #102142;
             color: var(--neon-blue);
-            cursor: pointer;
-            user-select: none;
-            transition: transform 0.1s, border-color 0.2s;
-            position: relative;
-            overflow: hidden;
+            font-size: 37px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 4px;
+            cursor: pointer;
+            border-radius: 4px;
+            padding: 10px;
+            white-space: pre-line;
+            user-select: none;
+            transition: border-color 0.2s;
         }
 
-        .answer-card:active {
-            transform: scale(0.98);
+        .answer-card:hover {
+            border-color: var(--border-neon);
         }
 
         .answer-card.revealed {
-            background: var(--revealed-bg);
-            border-color: var(--revealed-fg);
-            color: #FFF;
-            justify-content: space-between;
-            padding: 0 10px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
+            background-color: var(--revealed-bg);
+            color: var(--revealed-fg);
+            border-color: var(--border-neon);
+            font-size: 27px;
         }
 
-        .answer-card.revealed .pts {
-            color: var(--text-gold);
+        .status-prompt {
+            font-size: 21px;
             font-weight: bold;
-            font-size: 14px;
-            background: rgba(255, 200, 0, 0.15);
-            padding: 2px 6px;
-            border-radius: 4px;
-            border: 1px solid var(--text-gold);
-            margin-left: 6px;
-            flex-shrink: 0;
-        }
-
-        .instruction-footer {
+            color: var(--text-gold);
             text-align: center;
-            color: var(--neon-red);
-            font-size: 11px;
-            margin-top: 5px;
-            font-weight: 500;
+            transition: color 0.3s ease;
         }
 
-        /* CONTROLS & FOOTER */
-        .controls {
-            width: 100%;
-            max-width: 900px;
+        .status-prompt.error-shake {
+            color: var(--neon-red) !important;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .nav-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            width: 100%;
+            padding: 0 5px;
         }
 
         .btn-nav {
-            background: #0A1526;
-            border: 1px solid #1E3A66;
-            color: #FFF;
-            padding: 8px 14px;
-            border-radius: 4px;
-            cursor: pointer;
+            background-color: #050B17;
+            color: #FFFFFF;
+            border: 1px solid #1E293B;
+            padding: 6px 16px;
+            font-size: 13px;
             font-weight: bold;
-            font-size: 12px;
-        }
-
-        .btn-nav:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
+            cursor: pointer;
+            border-radius: 3px;
         }
 
         .credits {
-            font-size: 10px;
-            color: #556B8D;
+            font-size: 16px;
+            font-weight: bold;
             font-style: italic;
-            text-align: center;
+            color: #475569;
         }
 
-        /* RESULTS TABLE */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(2, 9, 26, 0.88);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--panel-bg);
+            border: 2px solid var(--border-neon);
+            border-radius: 6px;
+            padding: 30px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.25);
+        }
+
+        .modal-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFFFFF;
+            margin-bottom: 25px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
         .results-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        .results-table th, .results-table td {
-            border: 1px solid #1A3058;
-            padding: 8px;
-            text-align: center;
-            font-size: 13px;
+            margin-top: 20px;
         }
 
         .results-table th {
-            background-color: #0A1833;
-            color: var(--neon-blue);
+            background-color: var(--button-dark);
+            color: var(--text-gold);
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        .results-table td {
+            background-color: var(--bg-dark);
+            padding: 12px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 1px solid #1E293B;
+        }
+
+        /* Adjustments for Mobile Screens */
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            .fullscreen-btn {
+                top: 5px;
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+            .top-header {
+                padding-top: 25px;
+                align-items: center;
+            }
+            .team-panel {
+                width: 38%;
+            }
+            .team-title {
+                font-size: 12px;
+                margin-bottom: 4px;
+                word-break: break-word;
+            }
+            .btn-team {
+                padding: 4px 6px;
+                font-size: 9px;
+                width: 100%;
+                text-align: center;
+            }
+            .round-score {
+                font-size: 20px;
+                padding: 2px 10px;
+                margin-bottom: 0;
+            }
+            .main-board {
+                padding: 10px;
+            }
+            .question-text {
+                font-size: 14px;
+            }
+            .answers-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                gap: 6px;
+                margin: 8px 0;
+            }
+            .answer-card {
+                font-size: 18px;
+                padding: 8px 4px;
+                min-height: 40px;
+            }
+            .answer-card.revealed {
+                font-size: 12px;
+            }
+            .status-prompt {
+                font-size: 11px;
+            }
+            .credits {
+                font-size: 9px;
+            }
+            .btn-nav {
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+            .results-table th, .results-table td {
+                padding: 6px;
+                font-size: 11px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <div class="fullscreen-container">
-            <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Ecran Complet</button>
-        </div>
+<button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Ecran Complet</button>
 
-        <div class="team-box">
-            <span class="team-title blue" id="title-team1">DISTRIBUȚESCU: 0</span>
-            <button class="btn-team" onclick="selectTeam(1)">⚡ Alege DISTRIBUȚESCU</button>
+<div class="container" id="game-container">
+    <div class="top-header">
+        <div class="team-panel">
+            <div class="team-title" id="lbl-e1">DISTRIBUȚESCU: 0</div>
+            <button class="btn-team" id="btn-e1" onclick="selectTeam(1)">⚡ Alege DISTRIBUȚESCU</button>
         </div>
+        
+        <div class="round-score" id="lbl-total-round">0</div>
 
-        <div class="score-center">
-            <div class="total-score" id="round-score">0</div>
-        </div>
-
-        <div class="team-box">
-            <span class="team-title" id="title-team2">FURNI_MEȘTERESCU: 0</span>
-            <button class="btn-team" onclick="selectTeam(2)">⚡ Alege FURNI_MEȘTERESCU</button>
+        <div class="team-panel" style="align-items: flex-end;">
+            <div class="team-title" id="lbl-e2">FURNI_MEȘTERESCU: 0</div>
+            <button class="btn-team" id="btn-e2" onclick="selectTeam(2)">⚡ Alege FURNI_MEȘTERESCU</button>
         </div>
     </div>
 
-    <div class="board" id="main-board">
-        <!-- Content dynamic -->
+    <div class="main-board" id="main-board">
+        <div class="question-text" id="lbl-question"></div>
+        <div class="answers-grid" id="answers-grid"></div>
+        <div class="status-prompt" id="lbl-status"></div>
     </div>
 
-    <div class="controls">
-        <button class="btn-nav" id="btn-prev" onclick="changeQuestion(-1)">◄ Înapoi</button>
+    <div class="nav-footer">
+        <button class="btn-nav" onclick="confirmPrevQuestion()">◀ Înapoi</button>
         <div class="credits">Creat de: Mihaela Iordache & Buhă Demis</div>
-        <button class="btn-nav" id="btn-next" onclick="changeQuestion(1)">Înainte ►</button>
+        <button class="btn-nav" onclick="confirmNextQuestion()">Înainte ▶</button>
     </div>
+</div>
 
-    <script>
-        const ECHIPA1 = "DISTRIBUȚESCU";
-        const ECHIPA2 = "FURNI_MEȘTERESCU";
+<div class="custom-modal" id="custom-modal">
+    <div class="modal-content">
+        <div class="modal-text" id="modal-text"></div>
+        <div class="modal-buttons">
+            <button class="btn-team" style="border-color: var(--active-green);" id="modal-btn-yes">DA</button>
+            <button class="btn-team" style="border-color: var(--neon-red);" id="modal-btn-no">NU</button>
+        </div>
+    </div>
+</div>
 
-        // GENERATOR DE SUNET PENTRU DEZVĂLUIRE (Web Audio API)
-        function playRevealSound() {
-            try {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                if (!AudioContext) return;
-                const ctx = new AudioContext();
-                
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
+<script>
+    const ECHIPA1 = "DISTRIBUȚESCU";
+    const ECHIPA2 = "FURNI_MEȘTERESCU";
 
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(523.25, ctx.currentTime); // Nota C5
-                osc.frequency.exponentialRampToValueAtTime(1046.50, ctx.currentTime + 0.15); // Ramp up la C6 (Ding!)
+    const QUESTIONS = [
+        {
+            intrebare: "Ce se așteaptă clientul să se întâmple cu AUTOCITIREA lui după ce apasă «TRIMITE»?",
+            raspunsuri: [
+                ["Autocitirea să fie folosită", 30],
+                ["Factura să reflecte consumul real", 22],
+                ["Să primească o confirmare", 18],
+                ["Să ajungă unde trebuie", 12],
+                ["Să apară vreo eroare de sistem", 10],
+                ["Să nu fie nevoie să vină și cu contorul", 8]
+            ]
+        },
+        {
+            intrebare: "Ce se poate întâmpla dacă AUTOCITIREA transmisă nu este utilizată efectiv?",
+            raspunsuri: [
+                ["Factura poate fi estimată", 32],
+                ["Apare o regularizare ulterior", 20],
+                ["Clientul cere explicații", 16],
+                ["Crește munca de clarificare", 12],
+                ["«Păi… eu de ce v-am mai trimis indexul?»", 12],
+                ["Contorul devine cel mai plimbat membru", 8]
+            ]
+        },
+        {
+            intrebare: "Ce facem noi, CREATORII, când avem o astfel de situație?",
+            raspunsuri: [
+                ["Identificăm și construim soluția", 30],
+                ["Lucrăm împreună", 22],
+                ["Folosim inteligent datele existente", 18],
+                ["Întrebăm «Cum facem să se poată?»", 12],
+                ["Facem un excel, evident", 10],
+                ["Sigur nu așteptăm să se rezolve singură", 8]
+            ]
+        },
+        {
+            intrebare: "Ce s-a schimbat după ce ne-am folosit SUPERPUTEREA și am optimizat procesul?",
+            raspunsuri: [
+                ["Preluarea autocitirilor a ajuns la 95%", 30],
+                ["Mai puține estimări", 25],
+                ["Mai multe date reale utilizate", 16],
+                ["Proces mai eficient", 12],
+                ["Mai multă valoare pentru client", 10],
+                ["Clientul poate lăsa contorul acasă", 7]
+            ]
+        }
+    ];
 
-                gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+    let currentQIdx = 0;
+    let scor1 = 0;
+    let scor2 = 0;
+    let selectedTeam = null;
 
-                osc.connect(gain);
-                gain.connect(ctx.destination);
+    let revealedAnswersHistory = QUESTIONS.map(q => 
+        q.raspunsuri.map(() => ({ revealed: false, team: null }))
+    );
 
-                osc.start();
-                osc.stop(ctx.currentTime + 0.3);
-            } catch (e) {
-                console.log("Audio not supported or blocked");
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => console.log(err));
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
             }
         }
+    }
 
-        const questionsData = [
-            {
-                question: "Ce reprezintă autocitirea indexului de energie electrică sau gaze naturale?",
-                answers: [
-                    { text: "Transmiterea indexului de către client", pts: 40 },
-                    { text: "O modalitate de a evita estimările", pts: 25 },
-                    { text: "Un mod de control al consumului", pts: 20 },
-                    { text: "O obligație contractuală/opțiune", pts: 10 },
-                    { text: "O metodă de reducere a erorilor de facturare", pts: 5 }
-                ]
-            },
-            {
-                question: "Ce se poate întâmpla dacă AUTOCITIREA transmisă nu este utilizată efectiv?",
-                answers: [
-                    { text: "Facturarea se face pe baza de estimare", pts: 35 },
-                    { text: "Apar neînțelegeri/reclamații din partea clientului", pts: 30 },
-                    { text: "Se emite o factură incorectă sau diferită de consumul real", pts: 15 },
-                    { text: "Clientul achită mai mult sau mai puțin decât a consumat", pts: 10 },
-                    { text: "Este necesară o regularizare ulterioară", pts: 6 },
-                    { text: "Scade încrederea clientului în furnizor/operator", pts: 4 }
-                ]
-            },
-            {
-                question: "Ce soluții propuneți pentru a ne asigura că indexul autocitit este preluat și utilizat?",
-                answers: [
-                    { text: "Avertizări/Mesaje de eroare la introducerea unui index eronat", pts: 35 },
-                    { text: "Confirmare automată a primirii indexului (SMS/E-mail)", pts: 25 },
-                    { text: "Sincronizare mai bună între sisteme (Furnizor - Distribuitor)", pts: 20 },
-                    { text: "Campanii de informare/educare a clienților", pts: 12 },
-                    { text: "Termene mai clare și mai vizibile pentru transmiterea indexului", pts: 8 }
-                ]
-            },
-            {
-                question: "Ce atribute ale aplicației pot crește gradul de utilizare al autocitirii?",
-                answers: [
-                    { text: "Interfață simplă și ușor de folosit", pts: 40 },
-                    { text: "Notificări/Alertă pentru perioada de transmitere", pts: 25 },
-                    { text: "Transmitere rapidă (fără mulți pași)", pts: 15 },
-                    { text: "Istoric al indexurilor și consumului vizibil", pts: 12 },
-                    { text: "Posibilitatea de a adăuga poză cu contorul", pts: 8 }
-                ]
+    function playRevealSound() {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(900, ctx.currentTime);
+            osc.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.2);
+        } catch (e) { console.log(e); }
+    }
+
+    function showCustomModal(text, onYes) {
+        const modal = document.getElementById("custom-modal");
+        const modalText = document.getElementById("modal-text");
+        const btnYes = document.getElementById("modal-btn-yes");
+        const btnNo = document.getElementById("modal-btn-no");
+
+        modalText.textContent = text;
+        modal.style.display = "flex";
+
+        btnYes.onclick = () => {
+            modal.style.display = "none";
+            onYes();
+        };
+
+        btnNo.onclick = () => {
+            modal.style.display = "none";
+        };
+    }
+
+    function selectTeam(teamNum) {
+        selectedTeam = teamNum;
+        updateStatusPrompt();
+    }
+
+    function updateStatusPrompt() {
+        const btnE1 = document.getElementById("btn-e1");
+        const btnE2 = document.getElementById("btn-e2");
+        const lblStatus = document.getElementById("lbl-status");
+
+        btnE1.classList.remove("active");
+        btnE2.classList.remove("active");
+
+        if (selectedTeam === null) {
+            lblStatus.textContent = "✦ Alege echipa de sus, apoi apasă caseta corespunzătoare ✦";
+            lblStatus.style.color = "var(--text-gold)";
+        } else {
+            if (selectedTeam === 1) {
+                btnE1.classList.add("active");
+                lblStatus.textContent = `✔ ECHIPA SELECTATĂ: ${ECHIPA1} ► Apasă un număr!`;
+            } else {
+                btnE2.classList.add("active");
+                lblStatus.textContent = `✔ ECHIPA SELECTATĂ: ${ECHIPA2} ► Apasă un număr!`;
             }
-        ];
+            lblStatus.style.color = "var(--active-green)";
+        }
+    }
 
-        let currentQ = 0;
-        let score1 = 0;
-        let score2 = 0;
-        let currentRoundPoints = 0;
-        let activeTeam = null; 
-        let revealedStates = [];
+    function loadQuestion() {
+        selectedTeam = null;
 
-        function initRevealedStates() {
-            revealedStates = questionsData.map(q => new Array(q.answers.length).fill(false));
+        if (currentQIdx >= QUESTIONS.length) {
+            showFinalResults();
+            return;
         }
 
-        initRevealedStates();
+        const qData = QUESTIONS[currentQIdx];
+        document.getElementById("lbl-question").textContent = `RUNDA ${currentQIdx + 1}/${QUESTIONS.length}\n${qData.intrebare}`;
 
-        function updateHeader() {
-            document.getElementById('title-team1').innerText = `${ECHIPA1}: ${score1}`;
-            document.getElementById('title-team2').innerText = `${ECHIPA2}: ${score2}`;
-            document.getElementById('round-score').innerText = currentRoundPoints;
+        const grid = document.getElementById("answers-grid");
+        grid.innerHTML = "";
 
-            const btns = document.querySelectorAll('.btn-team');
-            btns[0].classList.toggle('active', activeTeam === 1);
-            btns[1].classList.toggle('active', activeTeam === 2);
+        let roundScore = 0;
+        const currentStates = revealedAnswersHistory[currentQIdx];
+
+        for (let i = 0; i < 6; i++) {
+            const card = document.createElement("div");
+            card.className = "answer-card";
+
+            if (i < qData.raspunsuri.length) {
+                const [text, puncte] = qData.raspunsuri[i];
+                if (currentStates[i].revealed) {
+                    card.classList.add("revealed");
+                    card.textContent = `${text}\n★ ${puncte} puncte ★`;
+                    roundScore += puncte;
+                } else {
+                    card.textContent = i + 1;
+                }
+                card.onclick = () => toggleAnswerClick(i);
+            } else {
+                card.style.visibility = "hidden";
+            }
+            grid.appendChild(card);
         }
 
-        function selectTeam(teamNum) {
-            activeTeam = teamNum;
-            updateHeader();
-        }
+        document.getElementById("lbl-total-round").textContent = roundScore;
+        updateStatusPrompt();
+    }
 
-        function revealAnswer(index) {
-            if (revealedStates[currentQ][index]) return;
+    function toggleAnswerClick(idx) {
+        const qData = QUESTIONS[currentQIdx];
+        if (idx >= qData.raspunsuri.length) return;
 
-            playRevealSound(); // Redă sunetul la deschidere
+        const state = revealedAnswersHistory[currentQIdx][idx];
 
-            revealedStates[currentQ][index] = true;
-            const pts = questionsData[currentQ].answers[index].pts;
-            currentRoundPoints += pts;
+        if (state.revealed) {
+            const [_, puncte] = qData.raspunsuri[idx];
+            if (state.team === 1) {
+                scor1 = Math.max(0, scor1 - puncte);
+                document.getElementById("lbl-e1").textContent = `${ECHIPA1}: ${scor1}`;
+            } else if (state.team === 2) {
+                scor2 = Math.max(0, scor2 - puncte);
+                document.getElementById("lbl-e2").textContent = `${ECHIPA2}: ${scor2}`;
+            }
 
-            if (activeTeam === 1) score1 += pts;
-            if (activeTeam === 2) score2 += pts;
-
-            updateHeader();
-            renderQuestion();
-        }
-
-        function renderQuestion() {
-            const board = document.getElementById('main-board');
-            
-            if (currentQ >= questionsData.length) {
-                renderFinalScreen(board);
+            state.revealed = false;
+            state.team = null;
+            loadQuestion();
+        } else {
+            if (selectedTeam === null) {
+                const lblStatus = document.getElementById("lbl-status");
+                lblStatus.textContent = "⚠️ Alege mai întâi echipa dând click pe butonul de sus!";
+                lblStatus.classList.remove("error-shake");
+                void lblStatus.offsetWidth;
+                lblStatus.classList.add("error-shake");
                 return;
             }
 
-            const q = questionsData[currentQ];
-            
-            let answersHTML = q.answers.map((ans, idx) => {
-                const isRevealed = revealedStates[currentQ][idx];
-                if (isRevealed) {
-                    return `<div class="answer-card revealed">
-                        <span>${ans.text}</span>
-                        <span class="pts">${ans.pts}</span>
-                    </div>`;
-                } else {
-                    return `<div class="answer-card" onclick="revealAnswer(${idx})">${idx + 1}</div>`;
-                }
-            }).join('');
+            playRevealSound();
+            state.revealed = true;
+            state.team = selectedTeam;
 
-            board.innerHTML = `
-                <div class="round-title">Runda ${currentQ + 1}/${questionsData.length}</div>
-                <div class="question-box">${q.question}</div>
-                <div class="answers-grid">${answersHTML}</div>
-                <div class="instruction-footer">✦ Alege echipa de sus, apoi apasă caseta corespunzătoare ✦</div>
-            `;
-
-            document.getElementById('btn-prev').disabled = currentQ === 0;
-            document.getElementById('btn-next').innerText = (currentQ === questionsData.length - 1) ? "Finalizează ►" : "Înainte ►";
-        }
-
-        function renderFinalScreen(board) {
-            let castigatoare = "EGALITATE!";
-            if (score1 > score2) castigatoare = `CÂȘTIGĂTOR: ${ECHIPA1}! 🎉`;
-            else if (score2 > score1) castigatoare = `CÂȘTIGĂTOR: ${ECHIPA2}! 🎉`;
-
-            board.innerHTML = `
-                <h1 style="color: var(--text-gold); font-size: 20px; text-align:center; margin-bottom: 5px;">🏆 CLASAMENT FINAL 🏆</h1>
-                <p style="color: #94A3B8; font-style: italic; margin-bottom: 15px; text-align:center; font-size: 12px;">Am întrebat 100 de Clienți – Rezultate</p>
-                <h2 style="color: var(--active-green); text-align:center; font-size: 16px; margin-bottom: 15px;">${castigatoare}</h2>
-
-                <table class="results-table">
-                    <thead>
-                        <tr>
-                            <th>LOC</th>
-                            <th>ECHIPĂ</th>
-                            <th>PUNCTAJ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>${score1 >= score2 ? ECHIPA1 : ECHIPA2}</td>
-                            <td>${Math.max(score1, score2)} pct</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>${score1 >= score2 ? ECHIPA2 : ECHIPA1}</td>
-                            <td>${Math.min(score1, score2)} pct</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <button class="btn-team" style="margin: 20px auto 0 auto; display: block; padding: 10px 20px; width: auto;" onclick="location.reload()">Reîncepe Jocul</button>
-            `;
-
-            document.getElementById('btn-prev').disabled = false;
-            document.getElementById('btn-next').disabled = true;
-        }
-
-        function changeQuestion(dir) {
-            if (dir === 1 && currentQ < questionsData.length) {
-                currentQ++;
-                currentRoundPoints = 0;
-            } else if (dir === -1 && currentQ > 0) {
-                currentQ--;
-                currentRoundPoints = 0;
-            }
-            updateHeader();
-            renderQuestion();
-        }
-
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(() => {});
+            const [_, puncte] = qData.raspunsuri[idx];
+            if (selectedTeam === 1) {
+                scor1 += puncte;
+                document.getElementById("lbl-e1").textContent = `${ECHIPA1}: ${scor1}`;
             } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
+                scor2 += puncte;
+                document.getElementById("lbl-e2").textContent = `${ECHIPA2}: ${scor2}`;
             }
-        }
 
-        updateHeader();
-        renderQuestion();
-    </script>
+            selectedTeam = null;
+            loadQuestion();
+        }
+    }
+
+    function confirmNextQuestion() {
+        const msg = currentQIdx === QUESTIONS.length - 1 ? "Vrei să afișezi REZULTATUL FINAL?" : "Vrei să treci la ÎNTREBAREA URMĂTOARE?";
+        showCustomModal(msg, () => {
+            currentQIdx++;
+            loadQuestion();
+        });
+    }
+
+    function confirmPrevQuestion() {
+        if (currentQIdx <= 0) return;
+        showCustomModal("Vrei să te întorci la ÎNTREBAREA ANTERIOARĂ?", () => {
+            currentQIdx--;
+            loadQuestion();
+        });
+    }
+
+    document.addEventListener("keydown", (e) => {
+        if (["Enter", " ", "ArrowRight"].includes(e.key)) confirmNextQuestion();
+        if (["ArrowLeft", "Backspace"].includes(e.key)) confirmPrevQuestion();
+        if (["1", "2", "3", "4", "5", "6"].includes(e.key)) {
+            toggleAnswerClick(parseInt(e.key) - 1);
+        }
+    });
+
+    function showFinalResults() {
+        const container = document.getElementById("game-container");
+        let winnerText = "";
+
+        if (scor1 > scor2) winnerText = `🎉 Câștigător: ${ECHIPA1}!`;
+        else if (scor2 > scor1) winnerText = `🎉 Câștigător: ${ECHIPA2}!`;
+        else winnerText = "🤝 Egalitate spectaculoasă!";
+
+        container.innerHTML = `
+            <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: center; padding-top: 30px;">
+                <div>
+                    <h1 style="color: var(--text-gold); font-size: 28px; margin-bottom: 5px;">🏆 CLASAMENT FINAL 🏆</h1>
+                    <p style="color: #94A3B8; font-style: italic; margin-bottom: 20px; font-size: 14px;">Am întrebat 100 de Clienți — Rezultate spectacol</p>
+                    
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>LOC</th>
+                                <th>ECHIPĂ</th>
+                                <th>PUNCTAJ</th>
+                                <th>REZULTAT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>${scor1 >= scor2 ? ECHIPA1 : ECHIPA2}</td>
+                                <td>${Math.max(scor1, scor2)} pct</td>
+                                <td>${scor1 === scor2 ? "🤝 EGALITATE" : "🥇 CÂȘTIGĂTOR"}</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>${scor1 >= scor2 ? ECHIPA2 : ECHIPA1}</td>
+                                <td>${Math.min(scor1, scor2)} pct</td>
+                                <td>${scor1 === scor2 ? "🤝 EGALITATE" : "🥈 Locul 2"}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2 style="color: var(--active-green); font-size: 22px; margin-top: 25px;">${winnerText}</h2>
+                    <button class="btn-team" style="margin-top: 15px; background-color: var(--neon-red);" onclick="location.reload()">Reîncepe Jocul</button>
+                </div>
+
+                <div class="credits" style="padding-bottom: 10px;">Creat de: Mihaela Iordache & Buhă Demis</div>
+            </div>
+        `;
+    }
+
+    loadQuestion();
+</script>
+
 </body>
 </html>
