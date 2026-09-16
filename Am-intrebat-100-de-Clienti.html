@@ -28,7 +28,7 @@
             background-color: var(--bg-dark);
             color: #FFFFFF;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 10px;
+            padding: 8px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -37,16 +37,51 @@
             overflow-x: hidden;
         }
 
-        /* HEADER OPTIMIZAT PENTRU MOBIL */
+        /* TOP BAR FIX PENTRU MOBIL */
         .top-bar {
             width: 100%;
             max-width: 900px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 8px;
             margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .fullscreen-container {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .fullscreen-btn {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .score-center {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2px 0;
+        }
+
+        .total-score {
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            padding: 2px 20px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.1);
         }
 
         .team-box {
@@ -54,69 +89,39 @@
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            flex: 1 1 40%;
-            min-width: 140px;
+            background: rgba(3, 13, 34, 0.6);
+            padding: 6px;
+            border-radius: 6px;
+            border: 1px solid #102347;
         }
 
         .team-title {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: bold;
             color: var(--neon-red);
-            text-shadow: 0 0 5px var(--neon-red);
+            text-shadow: 0 0 4px var(--neon-red);
             text-align: center;
             word-break: break-word;
         }
 
         .team-title.blue {
             color: var(--text-gold);
-            text-shadow: 0 0 5px var(--text-gold);
-        }
-
-        .score-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            order: 0;
-            flex: 1 1 100%;
-            margin-bottom: 5px;
-        }
-
-        @media (min-width: 600px) {
-            .score-center {
-                order: initial;
-                flex: 0 0 auto;
-                margin-bottom: 0;
-            }
-            .team-box {
-                flex: 0 1 auto;
-            }
-            .team-title {
-                font-size: 16px;
-            }
-        }
-
-        .total-score {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--neon-blue);
-            border: 2px solid var(--neon-blue);
-            padding: 2px 15px;
-            border-radius: 4px;
-            box-shadow: 0 0 10px var(--neon-blue);
-            background: rgba(0, 240, 255, 0.1);
+            text-shadow: 0 0 4px var(--text-gold);
         }
 
         .btn-team {
             background: var(--button-dark);
             border: 1px solid var(--text-gold);
             color: #FFF;
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 11px;
+            font-size: 10px;
             transition: all 0.2s;
             text-transform: uppercase;
+            width: 100%;
+            text-align: center;
         }
 
         .btn-team:hover, .btn-team.active {
@@ -125,15 +130,42 @@
             box-shadow: 0 0 8px var(--text-gold);
         }
 
-        .fullscreen-btn {
-            background: transparent;
-            border: 1px solid var(--neon-blue);
-            color: var(--neon-blue);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            cursor: pointer;
-            margin-bottom: 4px;
+        /* ADAPTARE DESKTOP */
+        @media (min-width: 650px) {
+            .top-bar {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .fullscreen-container {
+                width: 100%;
+                order: -1;
+                margin-bottom: 5px;
+            }
+            .score-center {
+                order: 2;
+                margin: 0;
+            }
+            .team-box {
+                order: 1;
+                flex: 1;
+                max-width: 250px;
+                border: none;
+                background: transparent;
+            }
+            .team-box:last-child {
+                order: 3;
+            }
+            .team-title {
+                font-size: 15px;
+            }
+            .btn-team {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+            .total-score {
+                font-size: 32px;
+            }
         }
 
         /* MAIN BOARD */
@@ -143,7 +175,7 @@
             background-color: var(--panel-bg);
             border: 2px solid var(--border-neon);
             border-radius: 8px;
-            padding: 12px;
+            padding: 10px;
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
             display: flex;
             flex-direction: column;
@@ -153,7 +185,7 @@
 
         .round-title {
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             color: #AAA;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -161,14 +193,15 @@
 
         .question-box {
             text-align: center;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             color: #FFF;
-            min-height: 48px;
+            min-height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0 5px;
+            line-height: 1.3;
         }
 
         .answers-grid {
@@ -188,7 +221,7 @@
         }
 
         .answer-card {
-            height: 55px;
+            height: 52px;
             background: linear-gradient(180deg, #071630 0%, #030A18 100%);
             border: 1px solid #1A3058;
             border-radius: 6px;
@@ -216,8 +249,8 @@
             border-color: var(--revealed-fg);
             color: #FFF;
             justify-content: space-between;
-            padding: 0 12px;
-            font-size: 13px;
+            padding: 0 10px;
+            font-size: 12px;
             font-weight: 600;
             text-transform: uppercase;
         }
@@ -225,11 +258,13 @@
         .answer-card.revealed .pts {
             color: var(--text-gold);
             font-weight: bold;
-            font-size: 15px;
+            font-size: 14px;
             background: rgba(255, 200, 0, 0.15);
             padding: 2px 6px;
             border-radius: 4px;
             border: 1px solid var(--text-gold);
+            margin-left: 6px;
+            flex-shrink: 0;
         }
 
         .instruction-footer {
@@ -296,13 +331,16 @@
 <body>
 
     <div class="top-bar">
+        <div class="fullscreen-container">
+            <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Ecran Complet</button>
+        </div>
+
         <div class="team-box">
             <span class="team-title blue" id="title-team1">DISTRIBUȚESCU: 0</span>
             <button class="btn-team" onclick="selectTeam(1)">⚡ Alege DISTRIBUȚESCU</button>
         </div>
 
         <div class="score-center">
-            <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Ecran Complet</button>
             <div class="total-score" id="round-score">0</div>
         </div>
 
@@ -313,7 +351,7 @@
     </div>
 
     <div class="board" id="main-board">
-        <!-- Content generated dynamically -->
+        <!-- Content dynamic -->
     </div>
 
     <div class="controls">
@@ -325,6 +363,33 @@
     <script>
         const ECHIPA1 = "DISTRIBUȚESCU";
         const ECHIPA2 = "FURNI_MEȘTERESCU";
+
+        // GENERATOR DE SUNET PENTRU DEZVĂLUIRE (Web Audio API)
+        function playRevealSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+                
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, ctx.currentTime); // Nota C5
+                osc.frequency.exponentialRampToValueAtTime(1046.50, ctx.currentTime + 0.15); // Ramp up la C6 (Ding!)
+
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start();
+                osc.stop(ctx.currentTime + 0.3);
+            } catch (e) {
+                console.log("Audio not supported or blocked");
+            }
+        }
 
         const questionsData = [
             {
@@ -401,6 +466,8 @@
         function revealAnswer(index) {
             if (revealedStates[currentQ][index]) return;
 
+            playRevealSound(); // Redă sunetul la deschidere
+
             revealedStates[currentQ][index] = true;
             const pts = questionsData[currentQ].answers[index].pts;
             currentRoundPoints += pts;
@@ -451,9 +518,9 @@
             else if (score2 > score1) castigatoare = `CÂȘTIGĂTOR: ${ECHIPA2}! 🎉`;
 
             board.innerHTML = `
-                <h1 style="color: var(--text-gold); font-size: 22px; text-align:center; margin-bottom: 5px;">🏆 CLASAMENT FINAL 🏆</h1>
-                <p style="color: #94A3B8; font-style: italic; margin-bottom: 15px; text-align:center; font-size: 13px;">Am întrebat 100 de Clienți – Rezultate</p>
-                <h2 style="color: var(--active-green); text-align:center; font-size: 18px; margin-bottom: 15px;">${castigatoare}</h2>
+                <h1 style="color: var(--text-gold); font-size: 20px; text-align:center; margin-bottom: 5px;">🏆 CLASAMENT FINAL 🏆</h1>
+                <p style="color: #94A3B8; font-style: italic; margin-bottom: 15px; text-align:center; font-size: 12px;">Am întrebat 100 de Clienți – Rezultate</p>
+                <h2 style="color: var(--active-green); text-align:center; font-size: 16px; margin-bottom: 15px;">${castigatoare}</h2>
 
                 <table class="results-table">
                     <thead>
@@ -477,7 +544,7 @@
                     </tbody>
                 </table>
 
-                <button class="btn-team" style="margin: 20px auto 0 auto; display: block; padding: 10px 20px;" onclick="location.reload()">Reîncepe Jocul</button>
+                <button class="btn-team" style="margin: 20px auto 0 auto; display: block; padding: 10px 20px; width: auto;" onclick="location.reload()">Reîncepe Jocul</button>
             `;
 
             document.getElementById('btn-prev').disabled = false;
