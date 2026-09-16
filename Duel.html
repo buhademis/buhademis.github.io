@@ -89,7 +89,7 @@
             z-index: 1;
         }
 
-        /* Scorul Total (SUS) - Marit la 42px */
+        /* Scorul Total (SUS) */
         .score-box {
             background-color: var(--dark-blue);
             border: 3px solid var(--border-blue);
@@ -119,7 +119,7 @@
             align-items: center;
         }
 
-        /* Întrebare - Marită la 36px */
+        /* Întrebare */
         .question-text {
             font-size: 36px;
             font-weight: bold;
@@ -152,7 +152,7 @@
             position: relative;
         }
 
-        /* Număr card ascuns - Marit la 40px */
+        /* Număr card ascuns */
         .card-num-box {
             background-color: var(--yellow);
             border: 2px solid var(--white);
@@ -172,14 +172,14 @@
             padding: 0 12px 0 25px;
         }
 
-        /* Text Răspuns - Marit la 28px */
+        /* Text Răspuns */
         .card-text {
             font-size: 28px;
             font-weight: bold;
             color: var(--white);
         }
 
-        /* Puncte - Marite la 36px */
+        /* Puncte */
         .card-pts-box {
             background-color: var(--panel-bg);
             border: 2px solid var(--white);
@@ -194,7 +194,7 @@
             color: var(--yellow);
         }
 
-        /* Ghid Comenzi - Marit la 26px */
+        /* Ghid Comenzi */
         .hint-text {
             font-size: 26px;
             font-weight: bold;
@@ -202,7 +202,7 @@
             text-align: center;
         }
 
-        /* Semnătură Dreapta Jos - Marită la 16px */
+        /* Semnătură Dreapta Jos */
         .footer-credits {
             width: 100%;
             display: flex;
@@ -214,6 +214,48 @@
             font-weight: bold;
             font-style: italic;
             color: var(--border-blue);
+        }
+
+        /* Optimizați automată pentru ecrane de telefon */
+        @media (max-width: 768px) {
+            .score-box {
+                width: 130px;
+                height: 50px;
+                font-size: 30px;
+            }
+            .main-panel {
+                width: 98%;
+                padding: 15px 12px 10px 12px;
+            }
+            .question-text {
+                font-size: 20px;
+            }
+            .cards-container {
+                width: 96%;
+                gap: 10px;
+            }
+            .card {
+                height: 60px;
+            }
+            .card-num-box {
+                width: 50px;
+                height: 42px;
+                font-size: 26px;
+            }
+            .card-text {
+                font-size: 16px;
+            }
+            .card-pts-box {
+                width: 60px;
+                height: 42px;
+                font-size: 22px;
+            }
+            .hint-text {
+                font-size: 14px;
+            }
+            .credits {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
