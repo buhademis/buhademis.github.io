@@ -7,6 +7,19 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Viitorul la puterea noi - Am întrebat 100 de Clienți</title>
+    <script>
+        // Această funcție forțează curățarea cache-ului o singură dată pe dispozitiv
+        (function() {
+            const versiuneCod = "v2.5"; // Modifică eticheta asta dacă mai faci update-uri pe viitor
+            const savedVersion = localStorage.getItem("clienti100_version");
+            if (savedVersion !== versiuneCod) {
+                localStorage.setItem("clienti100_version", versiuneCod);
+                if (!window.location.search.includes("nocache")) {
+                    window.location.replace(window.location.pathname + "?nocache=" + Date.now());
+                }
+            }
+        })();
+    </script>
     <style>
         :root {
             --bg-dark: #02091A;
