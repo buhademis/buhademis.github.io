@@ -8,9 +8,8 @@
     <meta http-equiv="Expires" content="0">
     <title>Viitorul la puterea noi - Am întrebat 100 de Clienți</title>
     <script>
-        // Această funcție forțează curățarea cache-ului o singură dată pe dispozitiv
         (function() {
-            const versiuneCod = "v2.5"; // Modifică eticheta asta dacă mai faci update-uri pe viitor
+            const versiuneCod = "v2.8"; 
             const savedVersion = localStorage.getItem("clienti100_version");
             if (savedVersion !== versiuneCod) {
                 localStorage.setItem("clienti100_version", versiuneCod);
@@ -50,6 +49,7 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            position: relative;
         }
 
         .fullscreen-btn {
@@ -150,6 +150,8 @@
             justify-content: space-between;
             flex: 1;
             width: 100%;
+            position: relative;
+            z-index: 2;
         }
 
         .question-text {
@@ -303,77 +305,64 @@
             border-bottom: 1px solid #1E293B;
         }
 
-        /* Adjustments for Mobile Screens */
+        /* Artificii ultra-spectaculoase, mari și strălucitoare */
+        #fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .firework-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            box-shadow: 0 0 12px currentColor, 0 0 24px currentColor, 0 0 36px currentColor;
+            animation: megaExplode 1.4s cubic-bezier(0.05, 0.9, 0.2, 1) forwards;
+        }
+
+        @keyframes megaExplode {
+            0% {
+                transform: translate(0, 0) scale(2);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--dx), var(--dy)) scale(0.1);
+                opacity: 0;
+            }
+        }
+
         @media (max-width: 768px) {
-            body {
-                padding: 8px;
-            }
-            .fullscreen-btn {
-                top: 5px;
-                font-size: 10px;
-                padding: 2px 8px;
-            }
-            .top-header {
-                padding-top: 25px;
-                align-items: center;
-            }
-            .team-panel {
-                width: 38%;
-            }
-            .team-title {
-                font-size: 12px;
-                margin-bottom: 4px;
-                word-break: break-word;
-            }
-            .btn-team {
-                padding: 4px 6px;
-                font-size: 9px;
-                width: 100%;
-                text-align: center;
-            }
-            .round-score {
-                font-size: 20px;
-                padding: 2px 10px;
-                margin-bottom: 0;
-            }
-            .main-board {
-                padding: 10px;
-            }
-            .question-text {
-                font-size: 14px;
-            }
-            .answers-grid {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto;
-                gap: 6px;
-                margin: 8px 0;
-            }
-            .answer-card {
-                font-size: 18px;
-                padding: 8px 4px;
-                min-height: 40px;
-            }
-            .answer-card.revealed {
-                font-size: 12px;
-            }
-            .status-prompt {
-                font-size: 11px;
-            }
-            .credits {
-                font-size: 9px;
-            }
-            .btn-nav {
-                padding: 4px 8px;
-                font-size: 10px;
-            }
-            .results-table th, .results-table td {
-                padding: 6px;
-                font-size: 11px;
-            }
+            body { padding: 8px; }
+            .fullscreen-btn { top: 5px; font-size: 10px; padding: 2px 8px; }
+            .top-header { padding-top: 25px; align-items: center; }
+            .team-panel { width: 38%; }
+            .team-title { font-size: 12px; margin-bottom: 4px; word-break: break-word; }
+            .btn-team { padding: 4px 6px; font-size: 9px; width: 100%; text-align: center; }
+            .round-score { font-size: 20px; padding: 2px 10px; margin-bottom: 0; }
+            .main-board { padding: 10px; }
+            .question-text { font-size: 14px; }
+            .answers-grid { grid-template-columns: 1fr; grid-template-rows: auto; gap: 6px; margin: 8px 0; }
+            .answer-card { font-size: 18px; padding: 8px 4px; min-height: 40px; }
+            .answer-card.revealed { font-size: 12px; }
+            .status-prompt { font-size: 11px; }
+            .credits { font-size: 9px; }
+            .btn-nav { padding: 4px 8px; font-size: 10px; }
+            .results-table th, .results-table td { padding: 6px; font-size: 11px; }
         }
     </style>
 </head>
 <body>
+
+<div id="fireworks-container"></div>
 
 <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Ecran Complet</button>
 
@@ -656,6 +645,43 @@
         }
     });
 
+    // Focuri de artificii multiple, intense și pline de culoare
+    function launchFireworks() {
+        const container = document.getElementById("fireworks-container");
+        const colors = ["#FFC800", "#00D2FF", "#FF0044", "#00FF66", "#00F0FF", "#FFFFFF", "#FF00FF", "#FFA500"];
+        
+        setInterval(() => {
+            // Lansăm câte 3 focuri simultan în colțuri și pe centru
+            for (let b = 0; b < 3; b++) {
+                const startX = window.innerWidth * (0.15 + Math.random() * 0.7);
+                const startY = window.innerHeight * (0.15 + Math.random() * 0.7);
+                const particleCount = 70; // Număr mare de particule per explozie
+
+                for (let i = 0; i < particleCount; i++) {
+                    const p = document.createElement("div");
+                    p.className = "firework-particle";
+                    p.style.left = `${startX}px`;
+                    p.style.top = `${startY}px`;
+                    
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    p.style.backgroundColor = color;
+                    p.style.color = color;
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 150 + Math.random() * 320; // Rază mare de extindere
+                    const dx = Math.cos(angle) * distance;
+                    const dy = Math.sin(angle) * distance;
+
+                    p.style.setProperty("--dx", `${dx}px`);
+                    p.style.setProperty("--dy", `${dy}px`);
+
+                    container.appendChild(p);
+                    setTimeout(() => p.remove(), 1400);
+                }
+            }
+        }, 500); // Frecvență ridicată pentru un efect copleșitor
+    }
+
     function showFinalResults() {
         const container = document.getElementById("game-container");
         let winnerText = "";
@@ -665,7 +691,7 @@
         else winnerText = "🤝 Egalitate spectaculoasă!";
 
         container.innerHTML = `
-            <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: center; padding-top: 30px;">
+            <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: center; padding-top: 30px; position: relative; z-index: 10;">
                 <div>
                     <h1 style="color: var(--text-gold); font-size: 28px; margin-bottom: 5px;">🏆 CLASAMENT FINAL 🏆</h1>
                     <p style="color: #94A3B8; font-style: italic; margin-bottom: 20px; font-size: 14px;">Am întrebat 100 de Clienți — Rezultate spectacol</p>
@@ -702,6 +728,8 @@
                 <div class="credits" style="padding-bottom: 10px;">Creat de: Mihaela Iordache & Buhă Demis</div>
             </div>
         `;
+
+        launchFireworks();
     }
 
     loadQuestion();
