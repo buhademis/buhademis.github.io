@@ -9,7 +9,7 @@
     <title>Viitorul la puterea noi - Am întrebat 100 de Clienți</title>
     <script>
         (function() {
-            const versiuneCod = "v3.0"; 
+            const versiuneCod = "v3.2"; 
             const savedVersion = localStorage.getItem("clienti100_version");
             if (savedVersion !== versiuneCod) {
                 localStorage.setItem("clienti100_version", versiuneCod);
@@ -174,7 +174,7 @@
 
         .answer-card {
             background-color: #061126;
-            border: 1px solid #102142;
+            border: 1px solid var(--border-neon);
             color: var(--neon-blue);
             font-size: 37px;
             font-weight: bold;
@@ -187,18 +187,19 @@
             padding: 10px;
             white-space: pre-line;
             user-select: none;
-            transition: border-color 0.2s;
+            transition: background-color 0.2s, box-shadow 0.2s;
         }
 
         .answer-card:hover {
-            border-color: var(--border-neon);
+            background-color: #0a1b3d;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
         }
 
         .answer-card.revealed {
             background-color: var(--revealed-bg);
             color: var(--revealed-fg);
             border-color: var(--border-neon);
-            font-size: 27px;
+            font-size: 31px; /* Text mărit un pic, fiind singur pe card */
         }
 
         .status-prompt {
@@ -305,7 +306,6 @@
             border-bottom: 1px solid #1E293B;
         }
 
-        /* Artificii spectaculoase afișate doar pe pagina finală */
         #fireworks-container {
             position: fixed;
             top: 0;
@@ -352,7 +352,7 @@
             .question-text { font-size: 14px; }
             .answers-grid { grid-template-columns: 1fr; grid-template-rows: auto; gap: 6px; margin: 8px 0; }
             .answer-card { font-size: 18px; padding: 8px 4px; min-height: 40px; }
-            .answer-card.revealed { font-size: 12px; }
+            .answer-card.revealed { font-size: 14px; }
             .status-prompt { font-size: 11px; }
             .credits { font-size: 9px; }
             .btn-nav { padding: 4px 8px; font-size: 10px; }
@@ -459,7 +459,7 @@
     let scor1 = 0;
     let scor2 = 0;
     let selectedTeam = null;
-    let fireworksInterval = null; // Reținem intervalul pentru a-l putea opri dacă e nevoie
+    let fireworksInterval = null;
 
     let revealedAnswersHistory = QUESTIONS.map(q => 
         q.raspunsuri.map(() => ({ revealed: false, team: null }))
@@ -528,15 +528,15 @@
         btnE2.classList.remove("active");
 
         if (selectedTeam === null) {
-            lblStatus.textContent = "✦ Alege echipa de sus, apoi apasă caseta corespunzătoare ✦";
+            lblStatus.textContent = "✦ Alege echipa de sus, apoi apasă pe o cifră ✦";
             lblStatus.style.color = "var(--text-gold)";
         } else {
             if (selectedTeam === 1) {
                 btnE1.classList.add("active");
-                lblStatus.textContent = `✔ ECHIPA SELECTATĂ: ${ECHIPA1} ► Apasă un număr!`;
+                lblStatus.textContent = `✔ ECHIPA SELECTATĂ: ${ECHIPA1} ► Apasă o cifră!`;
             } else {
                 btnE2.classList.add("active");
-                lblStatus.textContent = `✔ ECHIPA SELECTATĂ: ${ECHIPA2} ► Apasă un număr!`;
+                lblStatus.textContent = `✔ ECHIPA SELECTATĂ: ${ECHIPA2} ► Apasă o cifră!`;
             }
             lblStatus.style.color = "var(--active-green)";
         }
@@ -567,10 +567,10 @@
                 const [text, puncte] = qData.raspunsuri[i];
                 if (currentStates[i].revealed) {
                     card.classList.add("revealed");
-                    card.textContent = `${text}\n★ ${puncte} puncte ★`;
+                    card.textContent = text; // Afișează DOAR textul, fără puncte/steluțe
                     roundScore += puncte;
                 } else {
-                    card.textContent = i + 1;
+                    card.textContent = i + 1; // Afișează cifra (1, 2, 3...) pe căsuță
                 }
                 card.onclick = () => toggleAnswerClick(i);
             } else {
@@ -654,12 +654,10 @@
         }
     });
 
-    // Funcție pentru lansarea focurilor de artificii doar pe ultima pagină
     function startFireworksShow() {
         const container = document.getElementById("fireworks-container");
         const colors = ["#FFC800", "#00D2FF", "#FF0044", "#00FF66", "#00F0FF", "#FFFFFF", "#FF00FF", "#FFA500"];
         
-        // Lansare imediată la deschiderea ecranului final
         triggerBurst(container, colors);
 
         fireworksInterval = setInterval(() => {
@@ -744,22 +742,20 @@
             </div>
         `;
         
-        // Pornim artificiile doar la ecranul final
         startFireworksShow();
     }
 
-    // Pornire joc (fără artificii pe parcursul întrebărilor)
     loadQuestion();
 
-    // Afișează fereastra de întâmpinare la încărcarea paginii
     window.onload = () => {
         showCustomModal(`
             🎉 <b>BINE AI VENIT!</b><br><br>
             <span style="color: var(--neon-blue); font-size: 22px;">„Am întrebat 100 de Clienți!”</span><br><br>
             <div style="text-align: left; font-size: 16px; line-height: 1.6; margin-top: 10px;">
                 Pentru a începe jocul:<br>
-                1️⃣ <b>Alege echipa</b> din care vrei să faci parte:<br>
-                🟡 <b style="color: var(--text-gold)">DISTRIBUȚESCU</b> sau 🔴 <b style="color: var(--neon-red)">FURNI_MEȘTERESCU</b>
+                1️⃣ <b>Alege echipa</b> din susul paginii:<br>
+                🟡 <b style="color: var(--text-gold)">DISTRIBUȚESCU</b> sau 🔴 <b style="color: var(--neon-red)">FURNI_MEȘTERESCU</b><br>
+                2️⃣ Apasă pe o cifră (1-6) pentru a dezvălui răspunsul și a aduna punctele!
             </div>
         `, () => {}, false);
     };
