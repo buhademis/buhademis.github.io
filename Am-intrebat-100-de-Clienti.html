@@ -9,7 +9,7 @@
     <title>Viitorul la puterea noi - Am întrebat 100 de Clienți</title>
     <script>
         (function() {
-            const versiuneCod = "v2.8"; 
+            const versiuneCod = "v2.9"; 
             const savedVersion = localStorage.getItem("clienti100_version");
             if (savedVersion !== versiuneCod) {
                 localStorage.setItem("clienti100_version", versiuneCod);
@@ -397,7 +397,7 @@
 <div class="custom-modal" id="custom-modal">
     <div class="modal-content">
         <div class="modal-text" id="modal-text"></div>
-        <div class="modal-buttons">
+        <div class="modal-buttons" id="modal-buttons-container">
             <button class="btn-team" style="border-color: var(--active-green);" id="modal-btn-yes">DA</button>
             <button class="btn-team" style="border-color: var(--neon-red);" id="modal-btn-no">NU</button>
         </div>
@@ -486,18 +486,26 @@
         } catch (e) { console.log(e); }
     }
 
-    function showCustomModal(text, onYes) {
+    function showCustomModal(text, onYes, showNo = true) {
         const modal = document.getElementById("custom-modal");
         const modalText = document.getElementById("modal-text");
         const btnYes = document.getElementById("modal-btn-yes");
         const btnNo = document.getElementById("modal-btn-no");
 
-        modalText.textContent = text;
+        modalText.innerHTML = text;
         modal.style.display = "flex";
+
+        if (!showNo) {
+            btnNo.style.display = "none";
+            btnYes.textContent = "START JOC";
+        } else {
+            btnNo.style.display = "inline-block";
+            btnYes.textContent = "DA";
+        }
 
         btnYes.onclick = () => {
             modal.style.display = "none";
-            onYes();
+            if (onYes) onYes();
         };
 
         btnNo.onclick = () => {
@@ -607,6 +615,9 @@
             state.revealed = true;
             state.team = selectedTeam;
 
+            // Declanșare artificii extra la răspuns corect
+            triggerExtraFireworks();
+
             const [_, puncte] = qData.raspunsuri[idx];
             if (selectedTeam === 1) {
                 scor1 += puncte;
@@ -626,7 +637,7 @@
         showCustomModal(msg, () => {
             currentQIdx++;
             loadQuestion();
-        });
+        }, true);
     }
 
     function confirmPrevQuestion() {
@@ -634,7 +645,7 @@
         showCustomModal("Vrei să te întorci la ÎNTREBAREA ANTERIOARĂ?", () => {
             currentQIdx--;
             loadQuestion();
-        });
+        }, true);
     }
 
     document.addEventListener("keydown", (e) => {
@@ -645,17 +656,16 @@
         }
     });
 
-    // Focuri de artificii multiple, intense și pline de culoare
+    // Focuri de artificii continue pe fundal
     function launchFireworks() {
         const container = document.getElementById("fireworks-container");
         const colors = ["#FFC800", "#00D2FF", "#FF0044", "#00FF66", "#00F0FF", "#FFFFFF", "#FF00FF", "#FFA500"];
         
         setInterval(() => {
-            // Lansăm câte 3 focuri simultan în colțuri și pe centru
-            for (let b = 0; b < 3; b++) {
+            for (let b = 0; b < 2; b++) {
                 const startX = window.innerWidth * (0.15 + Math.random() * 0.7);
                 const startY = window.innerHeight * (0.15 + Math.random() * 0.7);
-                const particleCount = 70; // Număr mare de particule per explozie
+                const particleCount = 45;
 
                 for (let i = 0; i < particleCount; i++) {
                     const p = document.createElement("div");
@@ -668,7 +678,7 @@
                     p.style.color = color;
 
                     const angle = Math.random() * Math.PI * 2;
-                    const distance = 150 + Math.random() * 320; // Rază mare de extindere
+                    const distance = 100 + Math.random() * 220;
                     const dx = Math.cos(angle) * distance;
                     const dy = Math.sin(angle) * distance;
 
@@ -679,7 +689,32 @@
                     setTimeout(() => p.remove(), 1400);
                 }
             }
-        }, 500); // Frecvență ridicată pentru un efect copleșitor
+        }, 900);
+    }
+
+    // Explozii extra la răspuns corect
+    function triggerExtraFireworks() {
+        const container = document.getElementById("fireworks-container");
+        const colors = ["#FFC800", "#00D2FF", "#FF0044", "#00FF66", "#00F0FF", "#FFFFFF"];
+        for (let b = 0; b < 3; b++) {
+            const startX = window.innerWidth * (0.2 + Math.random() * 0.6);
+            const startY = window.innerHeight * (0.2 + Math.random() * 0.6);
+            for (let i = 0; i < 60; i++) {
+                const p = document.createElement("div");
+                p.className = "firework-particle";
+                p.style.left = `${startX}px`;
+                p.style.top = `${startY}px`;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                p.style.backgroundColor = color;
+                p.style.color = color;
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 120 + Math.random() * 250;
+                p.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+                p.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
+                container.appendChild(p);
+                setTimeout(() => p.remove(), 1400);
+            }
+        }
     }
 
     function showFinalResults() {
@@ -728,11 +763,25 @@
                 <div class="credits" style="padding-bottom: 10px;">Creat de: Mihaela Iordache & Buhă Demis</div>
             </div>
         `;
-
-        launchFireworks();
+        triggerExtraFireworks();
     }
 
+    // Pornire joc și afișare pop-up instrucțiuni la început
+    launchFireworks();
     loadQuestion();
+
+    // Afișează fereastra de întâmpinare la încărcarea paginii
+    window.onload = () => {
+        showCustomModal(`
+            🎉 <b>BINE AI VENIT!</b><br><br>
+            <span style="color: var(--neon-blue); font-size: 22px;">„Am întrebat 100 de Clienți!”</span><br><br>
+            <div style="text-align: left; font-size: 16px; line-height: 1.6; margin-top: 10px;">
+                Pentru a începe jocul:<br>
+                1️⃣ <b>Alege echipa</b> din care vrei să faci parte:<br>
+                🟡 <b style="color: var(--text-gold)">DISTRIBUȚESCU</b> sau 🔴 <b style="color: var(--neon-red)">FURNI_MEȘTERESCU</b>
+            </div>
+        `, () => {}, false);
+    };
 </script>
 
 </body>
